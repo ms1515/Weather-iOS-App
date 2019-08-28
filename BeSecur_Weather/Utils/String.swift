@@ -8,6 +8,25 @@
 
 import UIKit
 
+extension String {
+    
+    func getDayOfWeek() -> String {
+        let formatter  = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        guard let formattedDate = formatter.date(from: self) else { return ""}
+        let myCalendar = Calendar(identifier: .gregorian)
+        let weekDay = myCalendar.component(.weekday, from: formattedDate)
+        let weekDayName = weekDay.getWeekDayName()
+        return weekDayName
+    }
+    
+    
+    func isTheDayToday() {
+        let todayDate = Date()
+        let todayDay = getDayOfWeek()
+    }
+}
+
 extension NSMutableAttributedString {
     
     class func setupWithText(_ text: String, description: String, textFont: UIFont, descriptionFont: UIFont, textColor: UIColor, descriptionColor: UIColor) -> NSMutableAttributedString?{
@@ -20,4 +39,5 @@ extension NSMutableAttributedString {
         attributedText.append(descriptionAttributedString)
         return attributedText
     }
+
 }

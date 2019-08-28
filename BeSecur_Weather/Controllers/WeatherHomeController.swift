@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class WeatherHomeController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     fileprivate let horizantalInset: CGFloat = 20
     fileprivate let verticalInset: CGFloat = 20
@@ -17,18 +17,28 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
     fileprivate let cellId = "cellId"
     var location = "Belfast"
     
-    let backgroundImageView: UIImageView = {
-        let iv = UIImageView()
-        iv.image = UIImage(named: "nightClear")?.withRenderingMode(.alwaysOriginal)
-        iv.contentMode = .scaleAspectFill
-        return iv
-    }()
+    let backgroundImageView = UIImageView(cornerRadius: 0, image: "blueSky")
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupRefreshControl()
         setupNavBar()
         setupCollectionView()
         searchLocation(location: location)
+    }
+    
+    func setupRefreshControl() {
+        let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = .white
+        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        collectionView?.refreshControl = refreshControl
+    }
+    
+    @objc func handleRefresh() {
+        forecasts.removeAll()
+        collectionView?.reloadData()
+        searchLocation(location: location)
+        collectionView?.refreshControl?.endRefreshing()
     }
     
     func searchLocation(location: String) {
@@ -64,13 +74,6 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
     var forecasts = [ConsolidatedWeather]()
     
     func setupNavBar() {
-        let navBar = self.navigationController?.navigationBar
-        navBar?.barStyle = .black
-        navBar?.shadowImage = UIImage()
-        navBar?.setBackgroundImage(UIImage(), for: .default)
-        navBar?.prefersLargeTitles = true
-        navBar?.titleTextAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 25, weight: .semibold), NSAttributedString.Key.foregroundColor: UIColor.white]
-        navBar?.largeTitleTextAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 45, weight: .semibold), NSAttributedString.Key.foregroundColor: UIColor.white]
         title = location
     }
 
@@ -78,6 +81,17 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         collectionView.backgroundView = backgroundImageView
         collectionView.contentInset = .init(top: verticalInset, left: horizantalInset, bottom: 3 * verticalInset, right: horizantalInset)
         collectionView.register(WeatherDayCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(RefreshView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "id")
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UIView {
+        let footerView = RefreshView()
+        return footerView
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        let footerViewSize = CGSize(width: view.frame.width, height: 200)
+        return forecasts.isEmpty ? footerViewSize : .zero
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -98,6 +112,7 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return lineSpacing
     }
+
 
 }
 

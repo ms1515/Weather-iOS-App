@@ -11,12 +11,10 @@ import UIKit
 extension UIView {
     
     func dropShadow(color: UIColor, opacity: Float, offSet: CGSize, radius: CGFloat) {
-
         layer.masksToBounds = false
         layer.shadowColor = color.cgColor
         layer.shadowOpacity = opacity
         layer.shadowOffset = offSet
         layer.shadowRadius = radius
-        
         }
 }

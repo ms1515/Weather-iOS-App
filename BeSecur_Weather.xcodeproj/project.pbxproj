@@ -21,6 +21,13 @@
 		84264DF52315D59A00027AEF /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84264DF42315D59A00027AEF /* String.swift */; };
 		84264DF92315DDE000027AEF /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84264DF82315DDE000027AEF /* Extensions.swift */; };
 		84264DFB2316982300027AEF /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84264DFA2316982300027AEF /* Weather.swift */; };
+		84264DFD2316B9BB00027AEF /* WeatherDayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84264DFC2316B9BB00027AEF /* WeatherDayViewModel.swift */; };
+		84264E002316BC1C00027AEF /* ConsolidatedWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84264DFF2316BC1C00027AEF /* ConsolidatedWeather.swift */; };
+		84264E022316D5E600027AEF /* CustomNavBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84264E012316D5E600027AEF /* CustomNavBarController.swift */; };
+		84264E052316E5BD00027AEF /* WeatherDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84264E042316E5BD00027AEF /* WeatherDetailViewController.swift */; };
+		84264E072316E92D00027AEF /* RefreshingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84264E062316E92D00027AEF /* RefreshingView.swift */; };
+		84264E092316F87D00027AEF /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84264E082316F87D00027AEF /* Date.swift */; };
+		84264E0B2316F93C00027AEF /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84264E0A2316F93C00027AEF /* Int.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +68,13 @@
 		84264DF42315D59A00027AEF /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		84264DF82315DDE000027AEF /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		84264DFA2316982300027AEF /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
+		84264DFC2316B9BB00027AEF /* WeatherDayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDayViewModel.swift; sourceTree = "<group>"; };
+		84264DFF2316BC1C00027AEF /* ConsolidatedWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsolidatedWeather.swift; sourceTree = "<group>"; };
+		84264E012316D5E600027AEF /* CustomNavBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavBarController.swift; sourceTree = "<group>"; };
+		84264E042316E5BD00027AEF /* WeatherDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailViewController.swift; sourceTree = "<group>"; };
+		84264E062316E92D00027AEF /* RefreshingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshingView.swift; sourceTree = "<group>"; };
+		84264E082316F87D00027AEF /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		84264E0A2316F93C00027AEF /* Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +160,8 @@
 			isa = PBXGroup;
 			children = (
 				84264DB92315C5E000027AEF /* WeatherHomeController.swift */,
+				84264E042316E5BD00027AEF /* WeatherDetailViewController.swift */,
+				84264E032316D6B200027AEF /* Navigation */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -163,6 +179,8 @@
 			children = (
 				84264DE72315C8BB00027AEF /* Location.swift */,
 				84264DFA2316982300027AEF /* Weather.swift */,
+				84264DFF2316BC1C00027AEF /* ConsolidatedWeather.swift */,
+				84264DFE2316BA1200027AEF /* WeatherDay */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -171,6 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				84264DED2315CEA800027AEF /* WeatherDayCell.swift */,
+				84264E062316E92D00027AEF /* RefreshingView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -181,9 +200,27 @@
 				84264DF02315CEEF00027AEF /* Layout.swift */,
 				84264DF22315CFDD00027AEF /* UIView.swift */,
 				84264DF42315D59A00027AEF /* String.swift */,
+				84264E0A2316F93C00027AEF /* Int.swift */,
 				84264DF82315DDE000027AEF /* Extensions.swift */,
+				84264E082316F87D00027AEF /* Date.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		84264DFE2316BA1200027AEF /* WeatherDay */ = {
+			isa = PBXGroup;
+			children = (
+				84264DFC2316B9BB00027AEF /* WeatherDayViewModel.swift */,
+			);
+			path = WeatherDay;
+			sourceTree = "<group>";
+		};
+		84264E032316D6B200027AEF /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				84264E012316D5E600027AEF /* CustomNavBarController.swift */,
+			);
+			path = Navigation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -317,12 +354,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				84264DFB2316982300027AEF /* Weather.swift in Sources */,
+				84264E002316BC1C00027AEF /* ConsolidatedWeather.swift in Sources */,
 				84264DE82315C8BB00027AEF /* Location.swift in Sources */,
+				84264E092316F87D00027AEF /* Date.swift in Sources */,
+				84264E072316E92D00027AEF /* RefreshingView.swift in Sources */,
 				84264DF92315DDE000027AEF /* Extensions.swift in Sources */,
+				84264E0B2316F93C00027AEF /* Int.swift in Sources */,
 				84264DBA2315C5E000027AEF /* WeatherHomeController.swift in Sources */,
 				84264DEE2315CEA800027AEF /* WeatherDayCell.swift in Sources */,
+				84264E022316D5E600027AEF /* CustomNavBarController.swift in Sources */,
+				84264DFD2316B9BB00027AEF /* WeatherDayViewModel.swift in Sources */,
 				84264DF32315CFDD00027AEF /* UIView.swift in Sources */,
 				84264DB82315C5E000027AEF /* AppDelegate.swift in Sources */,
+				84264E052316E5BD00027AEF /* WeatherDetailViewController.swift in Sources */,
 				84264DE62315C77D00027AEF /* Service.swift in Sources */,
 				84264DF52315D59A00027AEF /* String.swift in Sources */,
 				84264DF12315CEEF00027AEF /* Layout.swift in Sources */,

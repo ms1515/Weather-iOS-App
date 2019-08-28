@@ -15,8 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
        
-        let weatherHomeController = ViewController(collectionViewLayout: UICollectionViewFlowLayout())
-        window?.rootViewController = UINavigationController(rootViewController: weatherHomeController)
+        let weatherHomeController = WeatherHomeController(collectionViewLayout: UICollectionViewFlowLayout())
+        window?.rootViewController = WeatherCustomNavController(rootViewController: weatherHomeController)
     
         return true
     }

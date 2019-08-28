@@ -15,15 +15,11 @@ class Service {
     let basePath = "https://www.metaweather.com/api/location/"
     
     func searchLocationWOID(location: String, completion: @escaping ([Location]?, URLResponse?, Error?)->()) {
-        
         let urlString = basePath + "search/?query=\(location)"
-        
         genericGetAPICall(urlString: urlString, completion: completion)
-        
     }
     
     func fetchLocationWeather(locationWoid: String, completion: @escaping (Weather?, URLResponse?, Error?)->()) {
-        
         let urlString = basePath + "\(locationWoid)"
         genericGetAPICall(urlString: urlString, completion: completion)
     }
@@ -33,10 +29,8 @@ class Service {
         print("T is type: ", T.self)
         
         guard let url = URL(string: urlString) else {return}
-        
         var request = URLRequest(url: url)
         request.httpMethod = "Get"
-        
         let session = URLSession(configuration: URLSessionConfiguration.default)
         session.dataTask(with: request) { (data, resp, err) in
             
@@ -45,7 +39,6 @@ class Service {
             }
             
             if let resp = resp as? HTTPURLResponse {
-                
                 guard (200 ... 299) ~= resp.statusCode else {
                     completion(nil,resp,nil)
                     return
@@ -55,17 +48,13 @@ class Service {
                 print(String(data: data, encoding: .utf8) ?? "")
                 
                 do {
-                    
                     let object = try JSONDecoder().decode(T.self, from: data)
                     completion(object, resp, nil)
-                    
                 } catch let jsonErr {
                     print("failed to decode json data",jsonErr)
                     completion(nil, resp, jsonErr)
                 }
             }
-            
             }.resume()
-
     }
 }
