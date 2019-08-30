@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RefreshView: UIView {
+class ReloadView: UIView {
     
     let activityIndicatorView : UIActivityIndicatorView = {
         let aiv = UIActivityIndicatorView(style: .whiteLarge)
@@ -31,6 +31,6 @@ class RefreshView: UIView {
         addSubview(activityIndicatorView)
         addSubview(infoLabel)
         activityIndicatorView.centerInSuperview()
-        infoLabel.anchor(top: activityIndicatorView.bottomAnchor, leading: nil, bottom: nil, trailing: nil, centerX: centerXAnchor, centerY: nil)
+        infoLabel.anchor(top: activityIndicatorView.bottomAnchor, leading: nil, bottom: nil, trailing: nil, centerX: centerXAnchor, centerY: nil, padding: .init(top: 20, left: 0, bottom: 0, right: 0))
     }
 }

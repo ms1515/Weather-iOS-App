@@ -14,17 +14,22 @@ class Service {
     
     let basePath = "https://www.metaweather.com/api/location/"
     
-    func searchLocationWOID(location: String, completion: @escaping ([Location]?, URLResponse?, Error?)->()) {
+    func searchLocationWOID(location: String, completion: @escaping ([Location]?, Error?)->()) {
         let urlString = basePath + "search/?query=\(location)"
         genericGetAPICall(urlString: urlString, completion: completion)
     }
     
-    func fetchLocationWeather(locationWoid: String, completion: @escaping (Weather?, URLResponse?, Error?)->()) {
-        let urlString = basePath + "\(locationWoid)"
+    func fetchLocationWeather(woid: String, completion: @escaping (Weather?, Error?)->()) {
+        let urlString = basePath + "\(woid)"
         genericGetAPICall(urlString: urlString, completion: completion)
     }
     
-     func genericGetAPICall<T: Codable> (urlString: String, completion: @escaping (T?, URLResponse?, Error?) -> ()) {
+    func fetchLocationDayWeather(woid: String, date: String, completion: @escaping ([ConsolidatedWeather]?, Error?) -> ()) {
+        let urlString = basePath + "\(woid)/" + "\(date)"
+        genericGetAPICall(urlString: urlString, completion: completion)
+    }
+    
+     func genericGetAPICall<T: Codable> (urlString: String, completion: @escaping (T?, Error?) -> ()) {
         
         print("T is type: ", T.self)
         
@@ -35,24 +40,24 @@ class Service {
         session.dataTask(with: request) { (data, resp, err) in
             
             if let err = err {
-                completion(nil, nil, err)
+                print("Error: ",err)
+                completion( nil, err)
             }
             
             if let resp = resp as? HTTPURLResponse {
                 guard (200 ... 299) ~= resp.statusCode else {
-                    completion(nil,resp,nil)
+                    completion(nil, err)
                     return
                 }
                 
                 guard let data = data else {return}
-                print(String(data: data, encoding: .utf8) ?? "")
                 
                 do {
                     let object = try JSONDecoder().decode(T.self, from: data)
-                    completion(object, resp, nil)
+                    completion(object, nil)
                 } catch let jsonErr {
                     print("failed to decode json data",jsonErr)
-                    completion(nil, resp, jsonErr)
+                    completion(nil, jsonErr)
                 }
             }
             }.resume()

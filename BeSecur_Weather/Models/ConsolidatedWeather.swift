@@ -15,7 +15,7 @@ struct ConsolidatedWeather: Codable {
     let minTemp, maxTemp, theTemp, windSpeed: Double
     let windDirection, airPressure: Double
     let humidity: Int
-    let visibility: Double
+    let visibility: Double?
     let predictability: Int
     
     enum CodingKeys: String, CodingKey {

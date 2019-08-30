@@ -8,19 +8,27 @@
 
 import UIKit
 
-struct WeatherDayViewModel: WeatherFormatable {
+struct WeatherHomeCellViewModel: WeatherFormatable {
     
     private var consolidatedWeather: ConsolidatedWeather?
     init(consolidatedWeather: ConsolidatedWeather) {
         self.consolidatedWeather = consolidatedWeather
     }
     
-     var weekDayAndDescriptionAttributedString: NSMutableAttributedString? {
+    fileprivate let textFont = UIFont.systemFont(ofSize: 30, weight: .bold)
+    fileprivate let descriptionFont = UIFont.systemFont(ofSize: 20, weight: .semibold)
+    
+    var weekDayAndDescriptionAttributedString: NSMutableAttributedString? {
         let weatherApplicabledate = consolidatedWeather!.applicableDate
-        let weekDay = weatherApplicabledate.getDayOfWeek()
         let weatherDescription = consolidatedWeather!.weatherStateName.capitalized
-        let attributedString = NSMutableAttributedString.setupWithText("\(weekDay)", description: "\n" + weatherDescription, textFont: .systemFont(ofSize: 30, weight: .bold), descriptionFont: .systemFont(ofSize: 20, weight: .semibold), textColor: .white, descriptionColor: .white)
-        return attributedString
+        let weekDay = weatherApplicabledate.getDayOfWeek()
+        if weekDay.isTheDayToday() {
+            let attributedString = NSMutableAttributedString.setupWithText("\(weekDay)", description: "\n" + "TODAY,  " + weatherDescription, textFont: textFont, descriptionFont: descriptionFont, textColor: .white, descriptionColor: .white)
+            return attributedString
+        } else {
+            let attributedString = NSMutableAttributedString.setupWithText("\(weekDay)", description: "\n" + weatherDescription, textFont: textFont, descriptionFont: descriptionFont, textColor: .white, descriptionColor: .white)
+            return attributedString
+        }
     }
     
     var highLowTemperatureAttributedString: NSMutableAttributedString? {
@@ -44,31 +52,13 @@ struct WeatherDayViewModel: WeatherFormatable {
         return nil
     }
     
-    var temperatureString: String? {
+    var temperatureString: NSMutableAttributedString? {
         let temperature = consolidatedWeather?.theTemp ?? 0
         let roundedTemperature = Int(temperature)
-        return addDegreeSign(toNumber: roundedTemperature)
+        let formattedTemperature =  addDegreeSign(toNumber: roundedTemperature)
+        let attributedString = NSMutableAttributedString.setupWithText("\(formattedTemperature)", description: "", textFont: .systemFont(ofSize: 30, weight: .semibold), descriptionFont: descriptionFont, textColor: .white, descriptionColor: .white)
+        return attributedString
     }
 
 }
 
-protocol WeatherFormatable {
-    func floatToPercentageString(float: Float) -> String
-    func addUnit(_ unitName: String, toNumber: Float) -> String
-}
-
-extension WeatherFormatable {
-    
-    func floatToPercentageString(float: Float) -> String {
-        return "\(Int(float * 100))" + " %"
-    }
-    
-    func addUnit<T>(_ unitName: String, toNumber: T) -> String {
-        return "\(toNumber) \(unitName)"
-    }
-    
-    func addDegreeSign<T>(toNumber: T)-> String {
-        return "\(toNumber)°"
-    }
-    
-}
