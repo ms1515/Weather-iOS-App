@@ -62,7 +62,7 @@ class WeatherDetailController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 220
+        return 240
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
