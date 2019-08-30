@@ -8,22 +8,22 @@
 
 import UIKit
 
-class WeatherDayCell: UICollectionViewCell {
+class WeatherHomeCell: UICollectionViewCell {
     
     var consolidatedWeather: ConsolidatedWeather! {
         didSet {
-            let weatherDayViewModel = WeatherDayViewModel(consolidatedWeather: consolidatedWeather)
-                weekDayAndDescriptionLabel.attributedText = weatherDayViewModel.weekDayAndDescriptionAttributedString
-                weatherStateIcon.image = weatherDayViewModel.weatherImage
+            let weatherHomeCellViewModel = WeatherHomeCellViewModel(consolidatedWeather: consolidatedWeather)
+                weekDayAndDescriptionLabel.attributedText = weatherHomeCellViewModel.weekDayAndDescriptionAttributedString
+                weatherStateIcon.image = weatherHomeCellViewModel.weatherImage
                 weatherStateIcon.contentMode = .scaleAspectFit
-                temperatureLabel.text = weatherDayViewModel.temperatureString
-                highLowTemperatureLabel.attributedText = weatherDayViewModel.highLowTemperatureAttributedString
+                temperatureLabel.attributedText = weatherHomeCellViewModel.temperatureString
+                highLowTemperatureLabel.attributedText = weatherHomeCellViewModel.highLowTemperatureAttributedString
         }
     }
     
-    fileprivate let cellRadius: CGFloat = 16
-    fileprivate let cellAlpha: CGFloat = 0.9
-    fileprivate let inset: CGFloat = 16
+    let cellRadius: CGFloat = 16
+    let cellAlpha: CGFloat = 0.9
+    let inset: CGFloat = 16
     
     lazy var cellBackgroundView: UIView = {
         let view = UIView()
@@ -36,9 +36,9 @@ class WeatherDayCell: UICollectionViewCell {
         return view
     }()
     
-    let weekDayAndDescriptionLabel = UILabel(text: "", font: .systemFont(ofSize: 2), numberOfLines: 2, color: nil)
+    let weekDayAndDescriptionLabel = UILabel()
     let highLowTemperatureLabel = UILabel()
-    let temperatureLabel = UILabel(text: "", font: .systemFont(ofSize: 30, weight: .semibold), numberOfLines: 1, color: .white)
+    let temperatureLabel = UILabel()
     let weatherStateIcon = UIImageView(cornerRadius: 0, image: nil)
     
     override init(frame: CGRect) {
@@ -48,14 +48,15 @@ class WeatherDayCell: UICollectionViewCell {
     
     func setupViews() {
         backgroundView = cellBackgroundView
+        weekDayAndDescriptionLabel.numberOfLines = 2
         addSubview(weekDayAndDescriptionLabel)
         addSubview(highLowTemperatureLabel)
         addSubview(weatherStateIcon)
         addSubview(temperatureLabel)
-        weekDayAndDescriptionLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: weatherStateIcon.leadingAnchor, centerX: nil, centerY: nil, padding: .init(top: inset, left: inset, bottom: 0, right: 0))
-        highLowTemperatureLabel.anchor(top: weekDayAndDescriptionLabel.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: nil, centerX: nil, centerY: nil, padding: .init(top: inset, left: inset, bottom: inset, right: 0))
+        weekDayAndDescriptionLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: nil, centerX: nil, centerY: nil, padding: .init(top: inset, left: inset, bottom: 0, right: 0))
+        highLowTemperatureLabel.anchor(top: nil, leading: leadingAnchor, bottom: bottomAnchor, trailing: nil, centerX: nil, centerY: nil, padding: .init(top: 0, left: inset, bottom: inset, right: 0))
         weatherStateIcon.anchor(top: topAnchor, leading: nil, bottom: nil, trailing: trailingAnchor, centerX: nil, centerY: nil, padding: .init(top: inset, left: 0, bottom: 0, right: inset), size: .init(width: 70, height: 70))
-        temperatureLabel.anchor(top: weatherStateIcon.bottomAnchor, leading: nil, bottom: bottomAnchor, trailing: trailingAnchor, centerX: nil, centerY: nil, padding: .init(top: 0, left: 0, bottom: 0, right: inset))
+        temperatureLabel.anchor(top: nil, leading: nil, bottom: bottomAnchor, trailing: trailingAnchor, centerX: nil, centerY: nil, padding: .init(top: 0, left: 0, bottom: inset, right: inset))
     }
     
     required init?(coder aDecoder: NSCoder) {

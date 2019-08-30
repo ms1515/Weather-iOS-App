@@ -34,9 +34,9 @@ struct WeatherHomeCellViewModel: WeatherFormatable {
     var highLowTemperatureAttributedString: NSMutableAttributedString? {
         
         let highTemperature = consolidatedWeather?.maxTemp ?? 0
-        let roundedHighTemperature = Int(highTemperature)
+        let roundedHighTemperature = Int(round(highTemperature))
         let lowTemperature = consolidatedWeather?.minTemp ?? 0
-        let roundedlowTemperature = Int(lowTemperature)
+        let roundedlowTemperature = Int(round(lowTemperature))
         
         let attributedText = NSMutableAttributedString(string: "High: \(roundedHighTemperature)°", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20, weight: .medium), NSAttributedString.Key.foregroundColor: UIColor.white])
         attributedText.append(NSAttributedString(string: "  Low: \(roundedlowTemperature)°", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20, weight: .medium), NSAttributedString.Key.foregroundColor: UIColor.white]))
@@ -54,7 +54,7 @@ struct WeatherHomeCellViewModel: WeatherFormatable {
     
     var temperatureString: NSMutableAttributedString? {
         let temperature = consolidatedWeather?.theTemp ?? 0
-        let roundedTemperature = Int(temperature)
+        let roundedTemperature = Int(round(temperature))
         let formattedTemperature =  addDegreeSign(toNumber: roundedTemperature)
         let attributedString = NSMutableAttributedString.setupWithText("\(formattedTemperature)", description: "", textFont: .systemFont(ofSize: 30, weight: .semibold), descriptionFont: descriptionFont, textColor: .white, descriptionColor: .white)
         return attributedString
