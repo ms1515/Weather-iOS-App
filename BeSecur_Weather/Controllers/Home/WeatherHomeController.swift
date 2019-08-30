@@ -46,6 +46,7 @@ class WeatherHomeController: UICollectionViewController, UICollectionViewDelegat
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         forecasts.removeAll()
+        handleSearchingCase()
         collectionView.reloadData()
         if let locationString = searchBar.text, !locationString.isEmpty {
             searchLocation(location: locationString)
@@ -77,12 +78,21 @@ class WeatherHomeController: UICollectionViewController, UICollectionViewDelegat
                 return
             }
             guard let location = location else { return }
-            let woid = location[0].woeid
-            self.woid = woid
-            self.location = location[0].title
-            self.fetchWeatherforLocation(woid: woid)
+            switch location.isEmpty {
+            case true:
+                DispatchQueue.main.async { [weak self] in
+                    self?.handleNotFoundCase()
+                    return
+                }
+            default:
+                let woid = location[0].woeid
+                self.woid = woid
+                self.location = location[0].title
+                self.fetchWeatherforLocation(woid: woid)
+            }
+            }
         }
-    }
+    
     
     func fetchWeatherforLocation(woid: Int) {
         let woid = String(woid)
@@ -99,6 +109,16 @@ class WeatherHomeController: UICollectionViewController, UICollectionViewDelegat
                 self?.setupNavBar()
             }
         }
+    }
+    
+    func handleSearchingCase() {
+        self.reloadView.infoLabel.text = "Loading, Please Wait"
+        self.reloadView.activityIndicatorView.startAnimating()
+    }
+    
+    func handleNotFoundCase() {
+        self.reloadView.infoLabel.text = "Not found, please try another term"
+        self.reloadView.activityIndicatorView.stopAnimating()
     }
     
     func setupNavBar() {

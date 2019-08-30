@@ -39,9 +39,10 @@ class Service {
         let session = URLSession(configuration: URLSessionConfiguration.default)
         session.dataTask(with: request) { (data, resp, err) in
             
-            if let err = err {
-                print("Error: ",err)
+            if err != nil || data == nil {
+                print("Error: url not found")
                 completion( nil, err)
+                return
             }
             
             if let resp = resp as? HTTPURLResponse {
@@ -51,7 +52,7 @@ class Service {
                 }
                 
                 guard let data = data else {return}
-                
+    
                 do {
                     let object = try JSONDecoder().decode(T.self, from: data)
                     completion(object, nil)
